@@ -1,7 +1,6 @@
 import grovepi
 import math
 import json
-import numpy as np
 from scipy.interpolate import interp1d
 
 # Library written for Python 3!
