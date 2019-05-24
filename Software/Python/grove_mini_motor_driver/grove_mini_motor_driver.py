@@ -15,7 +15,10 @@ def getNewSMBus():
         import winrt_smbus as smbus
         bus = smbus.SMBus(1)
     else:
-        import smbus
+        try:
+            import smbus
+        except:
+            import smbus2 as smbus
         import RPi.GPIO as GPIO
         revision = GPIO.RPI_REVISION
 

@@ -46,8 +46,8 @@ THE SOFTWARE.
 import sys
 import time
 import math
+import statistics as stats
 import struct
-import numpy
 from periphery import I2C, I2CError
 
 debug = 0
@@ -373,8 +373,8 @@ def statisticalNoiseReduction(values, std_factor_threshold = 2):
 	if len(values) == 0:
 		return []
 
-	mean = numpy.mean(values)
-	standard_deviation = numpy.std(values)
+	mean = stats.mean(values)
+	standard_deviation = stats.stdev(values, mean)
 
 	if standard_deviation == 0:
 		return values

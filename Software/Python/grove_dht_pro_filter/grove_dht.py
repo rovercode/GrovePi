@@ -1,5 +1,5 @@
 import threading # we need threads for processing data seperately from the main thread
-import numpy # for statistical computations
+import statistics as stats # for statistical computations
 import datetime
 import math # for NaNs
 from grovepi import dht # we built on top of the base function found in the grovepi library
@@ -16,8 +16,8 @@ def statisticalNoiseReduction(values, std_factor_threshold = 2):
 	if len(values) == 0:
 		return []
 
-	mean = numpy.mean(values)
-	standard_deviation = numpy.std(values)
+	mean = stats.mean(values)
+	standard_deviation = stats.stdev(values, mean)
 
 	# just return if we only got constant values
 	if standard_deviation == 0:
@@ -187,8 +187,8 @@ class Dht(threading.Thread):
 
 			if len(values) > 0:
 				# remove outliers
-				temp = numpy.mean(statisticalNoiseReduction([x["temp"] for x in values], self.filtering_aggresiveness))
-				humidity = numpy.mean(statisticalNoiseReduction([x["hum"] for x in values], self.filtering_aggresiveness))
+				temp = stats.mean(statisticalNoiseReduction([x["temp"] for x in values], self.filtering_aggresiveness))
+				humidity = stats.mean(statisticalNoiseReduction([x["hum"] for x in values], self.filtering_aggresiveness))
 
 				# insert into the filtered buffer
 				self.lock.acquire()
